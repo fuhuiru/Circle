@@ -1,8 +1,12 @@
+import "./css/global.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+
 import Vue from 'vue'
 import App from './App.vue'
 import Home from './page/home'
 import Signup from './page/signup'
 import Login from './page/login'
+
 
 
 import Router from 'vue-router'

@@ -1,16 +1,17 @@
 <template>
   <div id="app">
+    <Nav></Nav>
    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Nav from './components/Nav'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Nav,
   }
 }
 </script>
