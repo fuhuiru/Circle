@@ -22,6 +22,7 @@
 </template>
 <script>
 import api from '../lib/api'
+import session from "../lib/session"
 export default {
     data(){
         return{
@@ -29,7 +30,8 @@ export default {
             error:{
                 username:'',
                 password:'',
-            }
+            },
+            session,
         }
     },
     methods: {
@@ -46,9 +48,15 @@ export default {
                 // console.log(r.data);
                 if(!r.data)
                 return;
-                
+                let id = r.data.username;
+                let userdata = r.data;
+                this.loginsuccess(id,userdata);
 
             })
+        },
+        loginsuccess(id,userdata){
+            session.login(id,userdata);
+            // this.$router.push("/");
         },
         validate(){
             let current = this.current;
