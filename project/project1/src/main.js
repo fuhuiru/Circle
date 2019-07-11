@@ -6,6 +6,10 @@ import App from './App.vue'
 import Home from './page/home'
 import Signup from './page/signup'
 import Login from './page/login'
+import Setting from './page/setting'
+import SettingMe from './page/settingme'
+import SettingSecurity from './page/settingsecurity'
+
 
 
 
@@ -26,6 +30,20 @@ let RouterConfig = [
   {
     path:'/login',
     component:Login,
+  },
+  {
+    path:'/setting',
+    component:Setting,
+    children:[
+      {
+        path:'me',
+        component:SettingMe,
+      },
+      {
+        path:'security',
+        component:SettingSecurity,
+      }
+    ]
   }
 ]
 new Vue({
