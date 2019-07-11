@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container signup">
       <h2>用户注册</h2>
       <form @submit.prevent="signup">
         <div class="form-group">
@@ -86,5 +86,8 @@ export default {
 h2 {
   text-align: center;
   margin-top: 60px;
+}
+.signup{
+  max-width: 900px;
 }
 </style>
