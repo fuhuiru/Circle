@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="container login">
       <h2>用户登录</h2>
       <form @submit.prevent="login">
         <div class="form-group">
@@ -90,5 +90,8 @@ h2 {
 .error {
   color: #b10;
   font-weight: 500;
+}
+.login{
+    max-width: 900px;
 }
 </style>
