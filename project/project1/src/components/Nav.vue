@@ -15,7 +15,7 @@
         </div>
         <div class="col user">
           <span v-if="session.loggedIn().sessionid">
-            <router-link to="/setting">用户：{{session.loggedIn().user.username}}</router-link>
+            <router-link to="/setting/me">用户：{{session.loggedIn().user.username}}</router-link>
             <a href="#" @click="logout()">退出</a>
           </span>
           <span v-else>
