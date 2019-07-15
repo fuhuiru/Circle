@@ -1,10 +1,13 @@
 <template>
-  <div class="a">
+<div class="row">
+  <div class="Nav">
     <div class="container">
       <div class="row nav">
         <div class="col">
           <div class="logo">
-            <img :src="logo">
+            <router-link to="/">
+              <img :src="logo">
+            </router-link>
           </div>
         </div>
         <div class="col-8 text-right">
@@ -26,38 +29,50 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 <script>
-import logo from "../assets/col.png"
+import logo from "../assets/col.png";
 import session from "../lib/session";
 export default {
   data() {
     return {
       session,
-      logo,
+      logo
       // userdata = [];
     };
   },
   methods: {
-    logout(){
+    logout() {
       console.log("dvdasv");
       this.session.logout();
-  }
+    }
   },
   mounted() {
-   console.log( this.session.loggedIn.user);
+    console.log(this.session.loggedIn.user);
   }
-}
+};
 </script>
 <style scoped>
-.searchbox{
+.Nav{
+  /* border-top: 2px solid #ef6c00; */
+  border-top: 2.5px solid #ef6c00;
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  z-index: 9999;
+  left:0;
+  right: 0;
+}
+.col-8{
+  margin-left: 20px;
+}
+.searchbox {
   outline: none;
-  border: 2px solid rgba(0,0,0,0.15);
+  border: 2.4px solid rgba(0, 0, 0, 0.36);
+  width: 300px;
 }
-.a{
-  background: #e1f5fe;
-   /* @extend .blue, .lighten-4; */
-}
+
 .text-right {
   text-align: right;
 }
@@ -93,12 +108,12 @@ export default {
   margin-right: 20px;
 }
 
-.nav .logo img{
+.nav .logo img {
   height: 56px;
   width: 160px;
 }
 
-span > *:hover{
+span > *:hover {
   text-decoration-line: none;
 }
 </style>

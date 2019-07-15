@@ -1,21 +1,32 @@
 <template>
   <div id="app">
     <Nav></Nav>
-   <router-view></router-view>
+    <div class="main">
+      <router-view></router-view>
+    </div>
+    <!-- <Footer></Footer> -->
   </div>
+  
 </template>
 
 <script>
-import Nav from './components/Nav'
+import Nav from "./components/Nav";
+import Footer from './components/Footer'
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Nav,
+    // Footer,
   }
-}
+};
 </script>
-
-<style>
-
+<style scoped>
+.app{
+  background-color: bisque;
+}
+/* Footer{
+  margin-bottom: 0px;
+} */
 </style>
+

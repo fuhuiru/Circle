@@ -17,6 +17,7 @@
           <label>用户名：</label>
           <span v-if="!me.username && !edit">---</span>
           <input type="text" v-model="me.username" :readonly="!edit">
+          <span v-if="error.usernameva">用户名格式有误，长度应在6-12位之间</span>
           <span v-if="error.username">用户名已存在！！！</span>
         </div>
         <div class="input">
@@ -37,27 +38,37 @@ export default {
   data() {
     return {
       me: {},
-      meSaved:{},
+      meSaved: {},
       edit: false, //是否为编辑模式
       updatepedding: false,
       error: {
-        username: false
+        username: false,
+        usernameva: false
       }
     };
   },
   methods: {
+    validateUsername() {
+      return /[a-zA-Z0-9]{6,12}/.test(this.me.username);
+    },
     submit() {
       this.updatepedding = true;
       console.log(this.me);
       // api("user/read").then(r=>{
       //   console.log(r.data);
       // })
+      // console.log(this.validateUsername());
+      if (!this.validateUsername()) {
+        this.error.usernameva = true;
+        this.updatepedding = false;
+        return;
+      }
+      this.error.usernameva = false;
 
       api("user/exists", {
         where: { and: { username: this.me.username } }
       }).then(r => {
-       
-       let usernameChanged = this.me.username !== this.meSaved.username;
+        let usernameChanged = this.me.username !== this.meSaved.username;
         if (r.data && usernameChanged) {
           this.error.username = true;
           this.updatepedding = false;
@@ -83,7 +94,7 @@ export default {
     api("user/find", { id: store.get("user").id }).then(r => {
       let data = r.data;
       this.me = data;
-      this.meSaved = {...data};
+      this.meSaved = { ...data };
 
       // this.me.username ? this.use
     });
