@@ -89,5 +89,7 @@ h2 {
 }
 .signup{
   max-width: 900px;
+  position: relative;
+  top: 40px;
 }
 </style>
