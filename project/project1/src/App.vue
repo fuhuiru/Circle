@@ -17,7 +17,7 @@ export default {
   name: "app",
   components: {
     Nav,
-    // Footer,
+    Footer,
   }
 };
 </script>
@@ -25,8 +25,13 @@ export default {
 .app{
   background-color: bisque;
 }
-/* Footer{
+.main{
+  background-attachment: fixed;
+  height: 625px;
+ background-image: url("assets/home.jpg");
+}
+Footer{
   margin-bottom: 0px;
-} */
+}
 </style>
 
