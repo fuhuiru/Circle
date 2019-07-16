@@ -9,6 +9,8 @@ import Login from './page/login'
 import Setting from './page/setting'
 import SettingMe from './page/settingme'
 import SettingSecurity from './page/settingsecurity'
+import Thread from './page/thread'
+
 
 
 
@@ -44,6 +46,10 @@ let RouterConfig = [
         component:SettingSecurity,
       }
     ]
+  },
+  {
+    path:'/thread/:id',
+    component:Thread,
   }
 ]
 new Vue({
