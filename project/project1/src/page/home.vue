@@ -23,7 +23,12 @@
           <div class="timeline">
             <div v-for="it in threadList" :key="it.id" class="activity">
               <div class="user">
-                <strong>{{it.$user.name}}</strong>
+                <router-link :to="'/thread/'+it.id"><strong>{{it.$user.name?it.$user.name:it.$user.username}}</strong></router-link>
+                
+                <div class="tool" v-if="user.id == it.$user.id">
+                  <button class="btn btn-primary" @click="threadForm = it">更新</button>
+                  <button class="btn btn-primary" @click="threadDelete(it.id)">删除</button>
+                </div>
               </div>
               <hr>
               <div class="title">{{it.title}}</div>
@@ -47,14 +52,23 @@ export default {
     return {
       threadForm: {},
       error: {},
-      threadList: []
+      threadList: [],
+      store,
+      user: store.get("user")
     };
   },
   mounted() {
     this.threadRead();
+    console.log(this.user.id);
     // api("thread/delete",{id:7});
   },
   methods: {
+    threadDelete(paid) {
+      api("thread/delete", { id: paid }).then(r => {
+        if (r.success) 
+        this.threadRead();
+      });
+    },
     threadRead() {
       api("thread/read", { with: ["belongs_to:user"] }).then(r => {
         // console.log(r.data[5].$user.id);
@@ -71,20 +85,41 @@ export default {
       console.log(form.user_id);
       form.cat_id = 1;
       form.created_at = formatter.format(new Date());
-      api("thread/create", form).then(r => {
+      // let url = "thread/create";
+      let url = "create";
+      if (form.id) {
+        url = "update";
+      }
+      api(`thread/${url}`, form).then(r => {
         console.log(r.data);
         if (!r.success) {
           return;
         }
         this.threadForm = {};
+        this.threadRead();
       });
-      this.threadRead();
     }
   }
 };
 </script>
 
 <style scoped>
+.user > * {
+  display: inline-block;
+}
+.user {
+  position: relative;
+}
+.user strong {
+  margin-top: 3px;
+}
+.tool {
+  position: absolute;
+  right: 0px;
+}
+.tool button {
+  margin: 0 3px;
+}
 .timeline {
   /* padding: 6px 8px; */
   background-color: transparent;
@@ -94,13 +129,13 @@ export default {
   background-color: #fff;
   border-radius: 3.5px;
 }
-.timeline .user{
+.timeline .user {
   padding: 6px 0;
 }
-.timeline .activity > *{
-  margin:6px 12px;
+.timeline .activity > * {
+  margin: 6px 12px;
 }
-hr{
+hr {
   margin-top: 0px;
 }
 .form .submit {
@@ -185,8 +220,8 @@ form .input input {
   margin-top: 0;
   /* height: 100%; */
   /* background-repeat: repeat-y; */
-  background-attachment: fixed; 
-  background-image:url("../assets/home.jpg"); 
+  background-attachment: fixed;
+  background-image: url("../assets/home.jpg");
   /* background-repeat:repeat-y; */
 }
 .main {
