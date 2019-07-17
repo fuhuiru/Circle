@@ -23,18 +23,19 @@
           <div class="timeline">
             <div v-for="it in threadList" :key="it.id" class="activity">
               <div class="user">
-                <router-link :to="'/thread/'+it.id"><strong>{{it.$user.name?it.$user.name:it.$user.username}}</strong></router-link>
                 
                 <div class="tool" v-if="user.id == it.$user.id">
                   <button class="btn btn-primary" @click="threadForm = it">更新</button>
                   <button class="btn btn-primary" @click="threadDelete(it.id)">删除</button>
                 </div>
               </div>
-              <hr>
-              <div class="title">{{it.title}}</div>
-              <div class="content">{{it.content}}</div>
+              
+              <div class="title"><span>标题：</span><router-link :to="'/thread/'+it.id">{{it.title}}</router-link></div>
+              <div class="content"><span>内容：</span>{{it.content}}</div>
               <div class="others">
                 <span>发帖时间：{{it.created_at}}</span>
+                <strong><span>用户：</span>{{it.$user?(it.$user.name || it.$user.username):"已注销"}}</strong>
+
               </div>
             </div>
           </div>
@@ -57,6 +58,11 @@ export default {
       user: store.get("user")
     };
   },
+  filters:{
+    cu(value){
+      return value+ "111111111";
+    }
+  },
   mounted() {
     this.threadRead();
     console.log(this.user.id);
@@ -69,8 +75,14 @@ export default {
         this.threadRead();
       });
     },
+  
     threadRead() {
-      api("thread/read", { with: ["belongs_to:user"] }).then(r => {
+      api("thread/read", { 
+        with: ["belongs_to:user"],
+        where:{and:{
+          parent_id:null
+        }}
+        }).then(r => {
         // console.log(r.data[5].$user.id);
         this.threadList = r.data;
       });
@@ -161,6 +173,10 @@ form .input input {
   border: none;
   outline: none;
   font-style: 18px;
+}
+.others strong{
+  display: inline-block;
+  margin-left: 20px;
 }
 
 .form form .input {
