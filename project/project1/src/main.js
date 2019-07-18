@@ -1,5 +1,6 @@
 import "./css/global.css"
 import "bootstrap/dist/css/bootstrap.min.css"
+// import 'fontawesome/fontawesome-free/css/fontawesome.min.css'
 
 import Vue from 'vue'
 import App from './App.vue'

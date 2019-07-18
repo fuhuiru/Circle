@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="main">
-        <div class="thread">
+        <div class="thread" v-if="currentThread.created_at">
           <div class="activity">
             <div class="user">
               <span>楼主：</span>
@@ -39,7 +39,8 @@
               </form>
             </div>
           </div>
-          <div class="allReplyComment">
+
+          <div class="allReplyComment" v-if="replyList.length">
             <div class="replyComment" v-for="it in replyList" :key="it.id">
                 <div class="replyUsername">用户：{{it.$user.username}}</div>
                <div class="replyContent">跟帖：{{it.content}}</div>
@@ -47,6 +48,13 @@
             <hr>
             </div>
           </div>
+          <div class="noReply" v-else>
+            <span>暂无跟帖</span>
+          </div>
+        </div>
+        <div class="loading" v-else>
+          <span>加载中.....</span>
+          <!-- <i class="fas fa-spinner"></i> -->
         </div>
       </div>
     </div>
@@ -65,6 +73,7 @@ export default {
       replyThread: {},
       replyList:[],
       isComment:false,
+      listLength:null,
     };
   },
   methods: {
@@ -99,12 +108,15 @@ export default {
         with:["belongs_to:user"],
         where:{and:{parent_id:this.currentThreadId}}}).then(r=>{
         if(r.success){
-          this.replyList = r.data;
+          this.replyList = r.data || [];
         }
       })
     }
   },
   mounted() {
+
+    this.listLength = this.replyList.length;
+    console.log(this.replyList.length);
     this.loadMainUser();
     this.loadAllReplyComment();
   }
@@ -228,6 +240,22 @@ form input {
   margin-bottom: 10px;
 }
 
-
+.noReply,loading{
+  position: relative;
+  top: 90px;
+  background: #fff;
+  height: 100px;
+  padding: 26px 30px;
+}
+.loading span,
+.noReply span{
+  font-size: 30px;
+}
+.loading{
+   position: relative;
+  top: 28px;
+  background-color: #fff;
+  border-radius: 3.5px;
+}
 
 </style>
