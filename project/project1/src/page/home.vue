@@ -24,7 +24,7 @@
             <div v-for="it in threadList" :key="it.id" class="activity">
               <div class="user">
                 
-                <div class="tool" v-if="user.id == it.$user.id">
+                <div class="tool" v-if="user?(user.id == it.$user.id):'false'">
                   <button class="btn btn-primary" @click="threadForm = it">更新</button>
                   <button class="btn btn-primary" @click="threadDelete(it.id)">删除</button>
                 </div>
